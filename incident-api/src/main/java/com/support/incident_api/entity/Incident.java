@@ -1,5 +1,9 @@
 package com.support.incident_api.entity;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,9 +15,16 @@ public class Incident{
     private Long id;
     private String serviceName;
     private String errorMessage;
-    private String priority;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+    private String status; 
 
+    private LocalDateTime createdAt;
+
+    //constructor
+    public Incident(){}
+
+    //getters
     public Long getId()
     {return id;}
 
@@ -23,23 +34,29 @@ public class Incident{
     public String getErrorMessage()
     { return errorMessage; }
 
-    public String getPriority()
+    public Priority getPriority()
     {return priority; }
     
     public String getStatus()
     {return status;}
 
+    public LocalDateTime getCreatedAt(){
+    return createdAt;   }
+
+    //setters
     public void setServiceName(String serviceName)
    {this.serviceName=serviceName;}
 
     public void setErrorMessage(String errorMessage)
    {this.errorMessage=errorMessage;}
 
-   public void setPriority(String priority)
+   public void setPriority(Priority priority)
    {this.priority=priority;}
 
    public void setStatus(String status)
    {this.status=status;}
 
+  public void setCreatedAt(LocalDateTime createdAt)
+    {this.createdAt=createdAt;}
 }
 

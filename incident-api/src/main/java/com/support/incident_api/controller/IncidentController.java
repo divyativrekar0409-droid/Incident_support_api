@@ -27,7 +27,17 @@ public List<Incident> getAllIncidents(){
 
     return service.getAllIncidents();
 }
+@PutMapping("/{id}/status")
+public Incident updateIncidentStatus(@PathVariable Long id,@RequestParam String status){
 
+    return service.updateStatus(id, status);
+}
+
+@GetMapping("/status/{status}")
+public List<Incident> getIncidentsByStatus(@PathVariable String status)
+{
+    return service.getIncidentsByStatus(status);
+}
 }
 
 
