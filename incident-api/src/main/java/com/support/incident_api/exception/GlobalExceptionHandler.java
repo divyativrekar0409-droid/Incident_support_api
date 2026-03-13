@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler{
 
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
 
     public ResponseEntity<Map<String,Object>> handleRunTimeException(RuntimeException ex){
 
