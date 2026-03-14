@@ -15,9 +15,12 @@ public class Incident{
     private Long id;
     private String serviceName;
     private String errorMessage;
+
     @Enumerated(EnumType.STRING)
     private Priority priority;
-    private String status; 
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     private LocalDateTime createdAt;
 
@@ -37,7 +40,7 @@ public class Incident{
     public Priority getPriority()
     {return priority; }
     
-    public String getStatus()
+    public Status getStatus()
     {return status;}
 
     public LocalDateTime getCreatedAt(){
@@ -53,7 +56,7 @@ public class Incident{
    public void setPriority(Priority priority)
    {this.priority=priority;}
 
-   public void setStatus(String status)
+   public void setStatus(Status status)
    {this.status=status;}
 
   public void setCreatedAt(LocalDateTime createdAt)
