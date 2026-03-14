@@ -47,7 +47,7 @@ public List<Incident> getAllIncidents(){
 public Incident updateIncidentStatus(Long id,Status status){
     logger.info("Updating status for incident id  {}",id );
     Incident incident=repository.findById(id)
-        .orElseThrow(()-> new RuntimeException("Incident not found"+ id));
+        .orElseThrow(()-> new RuntimeException("Incident not found: "+ id));
 
     incident.setStatus(status);
     logger.info("Incident {} updated to status {}",id,status);
