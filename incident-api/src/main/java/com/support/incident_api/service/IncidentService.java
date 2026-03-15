@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.support.incident_api.entity.Incident;
-import com.support.incident_api.repository.IncidentRepository;
-import com.support.incident_api.entity.Status;
 import com.support.incident_api.entity.Priority;
+import com.support.incident_api.entity.Status;
+import com.support.incident_api.repository.IncidentRepository;
 
 //import jakarta.annotation.Priority;
 
@@ -60,8 +62,10 @@ public List<Incident> getIncidentsByStatus(Status status){
     List<Incident> list=repository.findByStatus(status);
     logger.info("Incidents found with status: {}",status);
     if(list.isEmpty()){
-     throw new RuntimeException("No incidents found with status: "+status);   }
-     logger.info("No incidents found with status: {}",status);
+        logger.info("No incidents found with status: {}",status);
+     throw new RuntimeException("No incidents found with status: "+status);  
+      }
+     
 
     return list;
     
@@ -81,6 +85,31 @@ public List<Incident> getIncidentsByPriority(Priority priority){
         if(list.isEmpty()){
             throw new RuntimeException("No incidents found with priority: "+priority);
                 
+    }
+    return list;
+}
+
+
+public Page<Incident> getAllIncidents(Pageable pageable){
+    logger.info("Retrieving all incidents with pagination: page {}, size {}", pageable.getPageNumber(), pageable.getPageSize());
+    return repository.findAll(pageable);
+}
+
+
+public Incident assignEngineerIncident(Long id,String assignedEngineer)
+{
+    Incident incident=repository.findById(id)
+    .orElseThrow(()-> new RuntimeException("Incident not found: "+ id));    
+    incident.setAssignedEngineer(assignedEngineer);
+    logger.info("Incident {} assigned to engineer {}",id,assignedEngineer); 
+    return repository.save(incident);
+}
+
+public List<Incident> getIncidentsByEngineer(String assignedEngineer){
+    logger.info("Incidents found assigned to engineer: {}",assignedEngineer);
+    List<Incident> list=repository.findByAssignedEngineer(assignedEngineer);
+    if(list.isEmpty()){
+        throw new RuntimeException("No incidents found assigned to engineer: "+assignedEngineer);
     }
     return list;
 }

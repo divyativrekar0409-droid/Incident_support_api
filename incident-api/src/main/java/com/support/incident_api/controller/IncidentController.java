@@ -2,6 +2,8 @@ package com.support.incident_api.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.support.incident_api.entity.Incident;
-import com.support.incident_api.service.IncidentService;
+import com.support.incident_api.entity.Priority;
 import com.support.incident_api.entity.Status;
-import com.support.incident_api.entity.Priority; 
+import com.support.incident_api.service.IncidentService; 
        
 @RestController
 @RequestMapping("/api/incidents")
@@ -31,11 +33,11 @@ return service.createIncident(incident);
 
 }
 
-@GetMapping
-public List<Incident> getAllIncidents(){
+// @GetMapping
+// public List<Incident> getAllIncidents(){
 
-    return service.getAllIncidents();
-}
+//     return service.getAllIncidents();
+// }
 @PutMapping("/{id}/status/{status}")
 public Incident updateIncidentStatus(@PathVariable Long id,@PathVariable Status status){
 
@@ -60,4 +62,18 @@ public List<Incident> getIncidentsByPriority(@PathVariable Priority priority){
 
 
 }
+@GetMapping
+public Page<Incident> getAllIncidents(Pageable pageable){
+    return service.getAllIncidents(pageable);   }
+    
+
+@PutMapping("/{id}/assignedEngineer/{assignedEngineer}")
+public Incident assignEngineerIncident(@PathVariable Long id,@PathVariable String assignedEngineer){
+    return service.assignEngineerIncident(id,assignedEngineer); 
+}
+
+@GetMapping("/assignedEngineer/{assignedEngineer}")
+public List<Incident> getIncidentsByEngineer(@PathVariable String assignedEngineer){
+    return service.getIncidentsByEngineer(assignedEngineer);
+}   
 }

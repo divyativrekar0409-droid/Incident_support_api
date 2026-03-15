@@ -24,6 +24,8 @@ public class Incident{
 
     private LocalDateTime createdAt;
 
+    private String assignedEngineer;
+
     //constructor
     public Incident(){}
 
@@ -46,6 +48,10 @@ public class Incident{
     public LocalDateTime getCreatedAt(){
     return createdAt;   }
 
+    public String getAssignedEngineer(){
+        return assignedEngineer;
+    }   
+
     //setters
     public void setServiceName(String serviceName)
    {this.serviceName=serviceName;}
@@ -61,5 +67,9 @@ public class Incident{
 
   public void setCreatedAt(LocalDateTime createdAt)
     {this.createdAt=createdAt;}
+
+    public void setAssignedEngineer(String assignedEngineer){
+        this.assignedEngineer=assignedEngineer;
+    }
 }
 
