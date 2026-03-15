@@ -34,7 +34,9 @@ public IncidentService(IncidentRepository repository){
 public Incident createIncident(Incident incident ){
    
     logger.info("creating incident for service:{}",incident.getServiceName());
-    incident.setStatus(Status.OPEN);
+    if(incident.getStatus()==null){
+        incident.setStatus(Status.OPEN);
+    }
     incident.setCreatedAt(LocalDateTime.now());
 
     return repository.save(incident);
@@ -46,11 +48,15 @@ public List<Incident> getAllIncidents(){
 
 
 
+@SuppressWarnings("static-access")
 public Incident updateIncidentStatus(Long id,Status status){
     logger.info("Updating status for incident id  {}",id );
     Incident incident=repository.findById(id)
         .orElseThrow(()-> new RuntimeException("Incident not found: "+ id));
-
+    if(incident.getStatus()==status.RESOLVED){
+        logger.warn("Incident {} is already resolved",id);
+        throw new RuntimeException("Incident is already resolved: "+ id);
+    }   
     incident.setStatus(status);
     logger.info("Incident {} updated to status {}",id,status);
 
