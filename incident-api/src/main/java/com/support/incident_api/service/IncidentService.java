@@ -100,7 +100,7 @@ public Incident assignEngineerIncident(Long id,String assignedEngineer)
 {
     Incident incident=repository.findById(id)
     .orElseThrow(()-> new RuntimeException("Incident not found: "+ id));    
-    incident.setAssignedEngineer(assignedEngineer);
+    incident.setAssignedEngineer(assignedEngineer.toUpperCase());
     logger.info("Incident {} assigned to engineer {}",id,assignedEngineer); 
     return repository.save(incident);
 }
