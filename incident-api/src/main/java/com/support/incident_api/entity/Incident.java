@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 @Entity
 public class Incident{
 
@@ -64,12 +65,12 @@ public class Incident{
 
    public void setStatus(Status status)
    {this.status=status;}
-
-  public void setCreatedAt(LocalDateTime createdAt)
-    {this.createdAt=createdAt;}
+    @PrePersist
+    public void setCreatedAt()
+    {this.createdAt=LocalDateTime.now();}
 
     public void setAssignedEngineer(String assignedEngineer){
-        this.assignedEngineer=assignedEngineer;
+        this.assignedEngineer=assignedEngineer == null ? null : assignedEngineer.trim().toUpperCase()  ;
     }
 }
 
