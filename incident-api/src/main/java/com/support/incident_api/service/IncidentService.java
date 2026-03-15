@@ -1,6 +1,5 @@
 package com.support.incident_api.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -37,7 +36,7 @@ public Incident createIncident(Incident incident ){
     if(incident.getStatus()==null){
         incident.setStatus(Status.OPEN);
     }
-    incident.setCreatedAt(LocalDateTime.now());
+   // incident.setCreatedAt(LocalDateTime.now());
 
     return repository.save(incident);
 }
